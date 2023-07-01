@@ -44,25 +44,29 @@ export const signin = async (req, res)=> {
 
 
 export const signup = async (req, res)=> {
+    
     const { email, password, confirmPassword, firstName, lastName, bio } = req.body
-
+    console.log('##email: ', email)
+    // console.log(crypto.randomBytes(32).toString('hex'))
     try {
         const existingUser = await User.findOne({ email })
+        
         const userProfile = await ProfileModel.findOne({ userId: existingUser?._id })
-
+        console.log('##userProfile ', userProfile)
         if(existingUser) return res.status(400).json({ message: "User already exist" })
 
         if(password !== confirmPassword) return res.status(400).json({ message: "Password don't match" })
         
         const hashedPassword = await bcrypt.hash(password, 12)
-
+        console.log('##hashedPassword ', hashedPassword)
         const result = await User.create({ email, password: hashedPassword, name: `${firstName} ${lastName}`, bio })
-
+        console.log('##result ', result)
         const token = jwt.sign({ email: result.email, id: result._id }, SECRET, { expiresIn: "1h" })
-        
+        console.log('##token ', token)
         res.status(200).json({ result, userProfile, token })
 
     } catch (error) {
+        console.error(error);
         res.status(500).json({ message: "Something went wrong"}) 
     }
 }

@@ -14,7 +14,7 @@ const Footer = () => {
     return (
         <footer>
             <div className={styles.footerText}>
-            ©Panshak Solomon  | Made with ♥ in 🇳🇬 <span><a href="https://github.com/Panshak/accountill" target="_blank" rel="noopener noreferrer">[Download source code]</a></span>
+            ©Ajit Singh | MNNIT <span><a href="https://github.com/ajit1028" target="_blank" rel="noopener noreferrer">Github Account</a></span>
             </div>
             {user && (
             <FabButton />
